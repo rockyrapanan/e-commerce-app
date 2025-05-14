@@ -1,0 +1,35 @@
+name: E-commerce-app CI/CD
+
+on:
+    push:
+        branches:
+          - main
+          - master
+    pull_request:
+        branches:
+         - main 
+         - master
+
+jobs: 
+      build: #Continuos intergration
+           runs-on: ubuntu-latest
+
+           steps:
+             # step1: Checkout the code.
+             - name: Checkout code
+               uses: actions/checkout@v2
+             # step2: Setup Node.js
+             - name: Set up Node.js
+               uses: actions/setup-node@v3
+               with:
+                   node-version: '20'
+             # step3: install dependencies
+             - name: Install dependencies
+               run: npm install
+             # step4: Run tests
+             - name: Run Test
+               run: npm test
+             # step5: Build React app
+             - name: Build React app
+               run: npm run build
+                 

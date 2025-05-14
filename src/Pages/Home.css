@@ -1,0 +1,25 @@
+/* Entire page layout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+  }
+  
+  /* Optional: if not applied to <body>, apply to #root or .container */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Grid that holds product cards */
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+  }
