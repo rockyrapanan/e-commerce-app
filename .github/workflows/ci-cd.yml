@@ -25,7 +25,7 @@ jobs:
                    node-version: '20'
              # step3: install dependencies
              - name: Install dependencies
-               run: npm install
+               run: npm install --legacy-peer-deps
              # step4: Run tests
              - name: Run Test
                run: npm test
