@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useReducer } from "react";
+import { createContext, ReactNode, useReducer } from "react";
 import { Product } from "../Types/Type";
 // Actions to manage the state
 // 1. SET_PRODUCTS: To set the list of products in the state.   
@@ -32,16 +32,16 @@ const productReducer = (
         case 'SET_SELECTED_CATEGORY':
             return { ...state, selectedCategory: action.payload };
         default:
-            throw new Error(`Unhandled action type: ${action.type}`);
+            return state;
     }
 };
 // Create a context 
-interface ProductContextType extends ProductState{
+export interface ProductContextType extends ProductState{
     
     // Dispatch allows us to send actions to the reducer to update the state { SET_PRODUCTS and SET_SELECTED_CATEGORY }.
     dispatch: React.Dispatch<ProductAction>;
 }
-const ProductContext = createContext<ProductContextType | undefined>(undefined);
+export const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 interface ProductProviderProps {
     children: ReactNode;    
@@ -56,11 +56,4 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     );
 };
 
-// Custom hook for accessing the context.
-export const useProductContext = (): ProductContextType => {
-    const context = useContext(ProductContext);
-    if(!context) {
-        throw new Error('useProductContext must be used within a ProductProvider');
-    }
-    return context;
-}
+// Custom hook for accessing the context has been moved to useProductContext.ts.
