@@ -11,6 +11,7 @@ import Logout from "./Pages/Logout";
 import Cart from "./Pages/Cart";
 import Navbar from "./Components/Navbar";
 
+
 function App() {
   const queryClient = new QueryClient();
   return (

@@ -1,31 +1,30 @@
-import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
-import { updateProfile, deleteUser } from 'firebase/auth'
-import styles from '../styles/authStyles'
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { updateProfile, deleteUser } from 'firebase/auth';
+import '../styles/authStyles.css'; // Plain CSS import
+
 const Profile = () => {
   const { user } = useAuth();
   const [displayName, setDisplayName] = useState(user?.displayName || '');
-  const [email, setEmail] = useState(user?.email || '');
+  const [email] = useState(user?.email || ''); // Read-only, unless you add updateEmail()
   const [error, setError] = useState('');
-  const [ success, setSuccess] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const handleupdateProfile = async (e: React.FormEvent) => {
+  const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess('');
     if (!user) {
-      setError('User not found'); 
+      setError('User not found');
       return;
     }
     try {
-      await updateProfile(user, {
-        displayName
-      });
+      await updateProfile(user, { displayName });
       setSuccess('Profile updated successfully');
     } catch (error) {
       setError('Failed to update profile');
     }
-  } // Closing the handleupdateProfile function
+  };
 
   const handleDeleteAccount = async () => {
     if (!user) {
@@ -35,43 +34,48 @@ const Profile = () => {
     try {
       await deleteUser(user);
       setSuccess('Account deleted successfully');
-    } catch (error: any) {
+    } catch (error) {
       setError('Failed to delete account');
     }
-  } // Closing the handleDeleteAccount function
+  };
+
   return (
-    <div>
-      <div>Profile</div>
-      <form onSubmit={handleupdateProfile}>
-        {error && <p className={styles.error}>{error}</p>}
-        {success && <p className={styles.success}>{success}</p>}
-        <fieldset className={styles.fieldset}>
-          <legend className={styles.legend}>Profile</legend>
+    <div className="form">
+      <h1>Profile</h1>
+      <form onSubmit={handleUpdateProfile}>
+        {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
+
+        <fieldset className="fieldset">
+          <legend className="legend">Edit Profile</legend>
+
           <input
-            className={styles.input}
+            className="input"
             type="text"
             placeholder="Display Name"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
           />
+
           <input
-            className={styles.input}
+            className="input"
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            readOnly
           />
-          <button className={styles.button} type="submit">Update</button>
-          {success && <p className={styles.success}>{success}</p>}
-          {error && <p className={styles.error}>{error}</p>}
-          <div className={styles.delete}>
-            <button className={styles.button} type="button" onClick={handleDeleteAccount}>Delete Account</button>
+
+          <button className="button" type="submit">Update</button>
+
+          <div className="linkContainer">
+            <button className="button" type="button" onClick={handleDeleteAccount}>
+              Delete Account
+            </button>
           </div>
         </fieldset>
       </form>
     </div>
   );
-  
 };
 
-export default Profile
+export default Profile;
