@@ -11,25 +11,45 @@ on:
          - master
 
 jobs: 
-      build: #Continuos intergration
-           runs-on: ubuntu-latest
+  build: #Continuos intergration
+       runs-on: ubuntu-latest
 
-           steps:
-             # step1: Checkout the code.
-             - name: Checkout code
-               uses: actions/checkout@v2
-             # step2: Setup Node.js
-             - name: Set up Node.js
-               uses: actions/setup-node@v3
-               with:
-                   node-version: '20'
-             # step3: install dependencies
-             - name: Install dependencies
-               run: npm install --legacy-peer-deps
-             # step4: Run tests
-             - name: Run Test
-               run: npm test
-             # step5: Build React app
-             - name: Build React app
-               run: npm run build
-                 
+       steps:
+         # step1: Checkout the code.
+         - name: Checkout code
+           uses: actions/checkout@v2
+         # step2: Setup Node.js
+         - name: Set up Node.js
+           uses: actions/setup-node@v3
+           with:
+               node-version: '20'
+         # step3: install dependencies
+         - name: Install dependencies
+           run: npm install --legacy-peer-deps
+         # step4: Run tests
+         - name: Run Test
+           run: npm test
+         # step5: Build React app
+         - name: Build React app
+           run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # step1: Checkout the code.
+      - name: Checkout code
+        uses: actions/checkout@v2
+      # step2: Setup Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: '20'
+      # step3: install dependencies
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+      # step4: Build React app
+      - name: Deploy to Vercel
+        run: |
+          npm install -g vercel
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} --confirm               
