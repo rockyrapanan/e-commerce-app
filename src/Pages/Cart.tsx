@@ -1,70 +1,42 @@
-import { useState } from 'react';
 
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
+
+import { useCart } from '../context/CartContext';
+
+import './Cart.css'; // Import the CSS file for styling
+
+
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { cartItems, removeFromCart, clearCart } = useCart();
 
-  const totalAmount = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  let total = 0;
+  for (const item of cartItems) {
+    total += item.price * item.quantity;
+  }
+  
 
-  const addItemToCart = () => {
-    const existingItem = cartItems.find(item => item.id === 1);
-
-    if (existingItem) {
-      setCartItems(prev =>
-        prev.map(item =>
-          item.id === 1 ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      );
-    } else {
-      setCartItems([
-        ...cartItems,
-        { id: 1, name: 'Sample Item', price: 10, quantity: 1 },
-      ]);
-    }
-  };
-
-  const removeItemFromCart = (id: number) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
-  };
 
   return (
-    <div className="form">
-      <h1>Shopping Cart</h1>
-      <button className="button" onClick={addItemToCart}>
-        Add Item
-      </button>
-
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
-      ) : (
-        <div>
-          <ul>
-            {cartItems.map(item => (
-              <li key={item.id}>
-                {item.name} - ${item.price} x {item.quantity}
-                <button
-                  className="button remove-button"
-                  onClick={() => removeItemFromCart(item.id)}
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-          <h2>Total: ${totalAmount.toFixed(2)}</h2>
+    <div>
+      <h1>Current Shopping Cart</h1>
+      <button onClick={clearCart} className="clear-cart-button">Clear Cart</button>
+      {cartItems.map((item) => (
+        <div key={item.id} className="cart-item">
+          <h3>{item.title}</h3>
+          <img src={item.image} alt={item.title} className="cart-item-image"/>
+          <p>Price: ${item.price}</p>
+          <p>Quatity: {item.quantity}</p>
+          <button onClick={() => removeFromCart(item.id)} className="remove-button">Remove</button>
         </div>
-      )}
+      ))}
+      <div className="total">
+        Total: ${total.toFixed(2)}
+      </div>
+      <button  className="checkout-button">
+        Proceed to Checkout
+      </button>
     </div>
   );
-};
+}
 
 export default Cart;

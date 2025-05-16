@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useReducer } from "react";
+import { createContext, ReactNode, useReducer, useContext } from "react";
 import { Product } from "../Types/Type";
 // Actions to manage the state
 // 1. SET_PRODUCTS: To set the list of products in the state.   
@@ -41,6 +41,7 @@ export interface ProductContextType extends ProductState{
     // Dispatch allows us to send actions to the reducer to update the state { SET_PRODUCTS and SET_SELECTED_CATEGORY }.
     dispatch: React.Dispatch<ProductAction>;
 }
+// eslint-disable-next-line react-refresh/only-export-components
 export const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 interface ProductProviderProps {
@@ -55,5 +56,10 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         </ProductContext.Provider>
     );
 };
-
-// Custom hook for accessing the context has been moved to useProductContext.ts.
+export const useProductContext = () => {
+    const context = useContext(ProductContext);
+    if (!context) {
+        throw new Error('useProductContext must be used within a ProductProvider');
+    }
+    return context;
+}

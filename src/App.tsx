@@ -9,6 +9,8 @@ import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import Logout from "./Pages/Logout";
 import Cart from "./Pages/Cart";
+import { CartProvider } from "./context/CartContext";
+
 import Navbar from "./Components/Navbar";
 
 
@@ -18,19 +20,20 @@ function App() {
     <QueryClientProvider client={queryClient}>
     <ProductProvider>
       <AuthProvider>
-     <BrowserRouter>
-      <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="logout" element={<Logout />} />
-          <Route path="cart" element={<Cart />} />
-
-       </Routes>
-     </BrowserRouter>
-     </AuthProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </AuthProvider>
     </ProductProvider>
     </QueryClientProvider>
 

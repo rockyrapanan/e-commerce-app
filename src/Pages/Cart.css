@@ -1,0 +1,35 @@
+/* src/components/Cart.css */
+
+.cart-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.cart-item-image {
+  width: 100px;
+  height: auto;
+}
+
+.remove-button {
+  margin-top: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.checkout-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.total {
+  margin-top: 20px;
+  font-weight: bold;
+}
