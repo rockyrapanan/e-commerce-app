@@ -51,4 +51,14 @@ export default tseslint.config({
     ...reactDom.configs.recommended.rules,
   },
 })
-```
+## Main Purpose of the E-Commerce App
+
+This project is a modern e-commerce web application built with React, TypeScript, and Vite. Its primary purpose is to provide a seamless online shopping experience, allowing users to:
+
+- Browse products by category
+- View detailed product information
+- Add items to a shopping cart
+- Manage cart contents and quantities
+- Proceed through a checkout process
+
+The app is designed for scalability, maintainability, and performance, making it a solid foundation for building a full-featured online store. It leverages best practices in front-end development and can be easily customized to fit various business needs.

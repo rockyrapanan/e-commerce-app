@@ -1,16 +1,25 @@
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  gap: 1rem;
+.navbar {
   background-color: #f8f9fa;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
 }
 
+.navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* Links stay in a row */
 .nav-link {
-  margin: 0 1rem;
   text-decoration: none;
   color: #343a40;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s ease;
 }
 
 .nav-link:hover {
