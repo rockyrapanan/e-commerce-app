@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useReducer, useContext } from "react";
 import { Product } from "../Types/Type";
+
 // Actions to manage the state
 // 1. SET_PRODUCTS: To set the list of products in the state.   
 // 2. SET_SELECTED_CATEGORY: To set the selected category in the state.
@@ -56,6 +57,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         </ProductContext.Provider>
     );
 };
+// Hook to use the ProductContext
 export const useProductContext = () => {
     const context = useContext(ProductContext);
     if (!context) {

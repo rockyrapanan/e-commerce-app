@@ -13,11 +13,13 @@ const Navbar = () => {
           <>
             <Link className="nav-link" to="/logout">Logout</Link>
             <Link className="nav-link" to="/cart">Cart</Link>
+            <Link className="nav-link" to="/order-history">Order History</Link>
           </>
         ) : (
           <>
             <Link className="nav-link" to="/register">Register</Link>
             <Link className="nav-link" to="/login">Login</Link>
+
           </>
         )}
       </div>

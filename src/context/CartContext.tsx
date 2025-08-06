@@ -1,5 +1,5 @@
-import { createContext, useContext, useReducer } from "react";
-import { Product } from "../Types/Type";
+import { createContext, useContext, useReducer } from "react"; // Import necessary hooks and types from React
+import { Product } from "../Types/Type"; // Import the Product type from the Types module
 
 interface CartState {
     items: Product[];
@@ -11,10 +11,12 @@ const initialState: CartState = {
 };
 
 type Action =
-  | { type: 'ADD_TO_CART'; payload: Product}
-  | {type: 'REMOVE_FROM_CART'; payload: string }
-  | {type: 'CLEAR_CART'};
-
+  | { type: 'ADD_TO_CART'; payload: Product} // Action to add a product to the cart
+  | {type: 'REMOVE_FROM_CART'; payload: number } // Action to remove a product from the cart
+  | {type: 'CLEAR_CART'}; // Action to clear the cart
+// Reducer function to manage the cart state.
+// It listens for actions and changes the state based on action type.
+// The actions are ADD_TO_CART, REMOVE_FROM_CART, and CLEAR_CART.
 const cartReducer = (state: CartState, action: Action): CartState => {
     switch (action.type) {
         case 'ADD_TO_CART':
@@ -27,7 +29,7 @@ const cartReducer = (state: CartState, action: Action): CartState => {
                 // If item already exists, increase the quantity.
                 const updatedItem = {
                     ...state.items[existingItemIndex],
-                    quantity: state.items[existingItemIndex].quantity + 1,
+                    quantity: (state.items[existingItemIndex]?.quantity || 0) + 1,
                 };
                 updatedAddItems = [...state.items];
                 updatedAddItems[existingItemIndex] = updatedItem;
@@ -38,9 +40,9 @@ const cartReducer = (state: CartState, action: Action): CartState => {
 
             sessionStorage.setItem('cart', JSON.stringify(updatedAddItems));
             return { items: updatedAddItems }; }
-        case 'REMOVE_FROM_CART':
+        case 'REMOVE_FROM_CART': 
             { const updateRemoveItems = state.items.filter(
-                (item: CartItem) => item.id !== action.payload
+                (item: Product) => item.id !== action.payload
             );
             sessionStorage.setItem('cart', JSON.stringify(updateRemoveItems));
             return { items: updateRemoveItems }; }
@@ -52,22 +54,22 @@ const cartReducer = (state: CartState, action: Action): CartState => {
 
     }
 };
-
+// Define the context type
 type CartContextType = {
     cartItems: Product[];
     addToCart: (product: Product) => void;
-    removeFromCart: (productId: string) => void;
+    removeFromCart: (productId: number) => void;
     clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
-
+// Create a provider component to wrap the application and provide the context value
 export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
     const [state, dispatch] = useReducer(cartReducer, initialState)
     const addToCart = (product: Product) => {
         dispatch({ type: 'ADD_TO_CART', payload: product });
     };
-    const removeFromCart = (productId: string) => {
+    const removeFromCart = (productId: number) => {
         dispatch({ type: 'REMOVE_FROM_CART', payload: productId});
     };
     const clearCart = () => {
@@ -80,7 +82,7 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) 
     );
     
 };
-
+// Custom hook to use the CartContext
 export const useCart = () => {
     const context = useContext(CartContext);
     if (context == undefined) {

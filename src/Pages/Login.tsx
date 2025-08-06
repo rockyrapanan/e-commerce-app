@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; // Import necessary hooks from React
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase/firebase';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { auth } from '../firebase/firebase'; // Import Firebase authentication methods
+import { useNavigate } from 'react-router-dom'; // Import React Router hooks
+import { useAuth } from '../context/AuthContext'; // Import custom authentication context
 import '../styles/authStyles.css'; // Plain CSS (not CSS Modules)
 
 const Login = () => {
@@ -17,18 +17,19 @@ const Login = () => {
       navigate('/profile');
     }
   }, [user, navigate]);
-
+  // Handle form submission for login
+  // This function is called when the user submits the login form.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    try {
+    try { // Prevent default form submission behavior
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/profile');
     } catch (error: unknown) {
-      if (error instanceof Error) {
+      if (error instanceof Error) { // Check if error is an instance of Error
         setError(error.message);
       } else {
-        setError('An unknown error occurred.');
+        setError('An unknown error occurred.'); // Handle the case where error is not an instance of Error
       }
     }
   };
@@ -61,4 +62,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; // Login component

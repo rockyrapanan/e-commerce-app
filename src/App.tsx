@@ -12,6 +12,7 @@ import Cart from "./Pages/Cart";
 import { CartProvider } from "./context/CartContext";
 
 import Navbar from "./Components/Navbar";
+import Carthistory from "./Pages/Carthistory";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/cart" element={<Cart />} />
+               <Route path="/order-history" element={<Carthistory />} />
             </Routes>
           </BrowserRouter>
         </CartProvider>
